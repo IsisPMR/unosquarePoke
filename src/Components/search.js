@@ -1,25 +1,37 @@
 import React, { Component } from "react";
 import "./search.css";
-/* import CatchPokemons from './Components/CatchPokemons'; */
 
 export default class Search extends Component {
-    
-    fecthPokemon(pokeName){
-        let pokemons = []; 
-        fetch(`https://pokeapi.co/api/v2/pokemon/${pokeName}`)
+    constructor(props){
+      super(props);
+      this.state = {
+        text: "EmptyList"
+      }
+    }
+
+    showPokemons(pokemons){
+      this.setState({
+        pokemons: []
+      });
+    }
+
+    fetchPokemon(pokeName){
+           fetch(`https://pokeapi.co/api/v2/pokemon/${pokeName}`)
           .then(response => response.json())
           .then(pokemon => {
             console.log(pokemon.id,pokemon.name,pokemon.sprites.front_default)
-            pokemons.push(pokemon)
+            this.setState.pokemons.push(pokemon)
           })
     }
           
   render() {
+    const { pokemons } = this.state;
+    console.log(pokemons)
     return (
       <div>
         <h2>Welcome!, looking for pokemons? click here: </h2>
         <input label="Search"></input>
-        <button className="catchButton" onClick={this.fecthPokemon('charmeleon')}>Catch!</button>
+        <button className="catchButton" onClick={this.showPokemons().bind(this)}>Catch!</button>
       </div>
     );
   }
